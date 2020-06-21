@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Breaking News (updated)</title>
+        <link href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet"/>
+        <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet"/>
+        <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet"/>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <style>
+      
+            .header {
+                background: #35312E;
+                color: rgb(206, 70, 70);
+                padding: 15px;
+            }
+            .container {
+                background: #35312E;
+                padding: 0 30px;
+            }
+
+            .article-link {
+                font-weight: bold;
+                text-decoration: none;
+            }
+
+            .article-action-button {
+                opacity: .5;
+            }
+
+            .article-action-button:hover {
+                opacity: 1;
+            }
+
+            .article-link {
+                flex: 1 0;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <v-app>
+                <v-container fluid>
+                    <v-row class="header">
+                        <header>
+                            <h1>Here is All The Recent News On Supporting Black Owned Buisness! </h1>
+                            <v-btn color="green" dark icon x-large>
+                         <v-icon> mdi-earth </v-icon>
+                     </v-btn>
+                        </header>
+                    </v-row>
+                    <v-row>
+                        <v-col>
+                            <v-card>
+                                <v-card-title>Latest</v-card-title>
+                                <v-card-text>
+                                    <article-list :articles="articles">
+                                        <template slot="buttons" slot-scope="item">
+                                            <v-btn @click="saveArticle(item.article)" class="article-action-button"
+                                                   color="green" dark icon small>
+                                                <v-icon> mdi-earth-arrow-right </v-icon>
+                                            </v-btn>
+                                        </template>
+                                    </article-list>
+                                </v-card-text>
+                            </v-card>
+                        </v-col>
+                        <v-col v-if="hasSaved">
+                            <v-card>
+                                <v-card-title>Saved</v-card-title>
+                                <v-card-text>
+                                    <article-list :articles="savedArticles">
+                                        <template slot="buttons" slot-scope="item">
+                                        </template>
+                                    </article-list>
+                                </v-card-text>
+                            </v-card>
+                        </v-code>
+                    </v-row>
+                </v-container>
+            </v-app>
+        </div>
+    </body>
+    <script id="articleListTemplate" type="x-template">
+        <div>
+            <v-row :key="item.title" class="px-2" v-for="item in articles">
+                <v-col>
+                    <v-row align="center">
+                        <slot name="buttons" :article="item"></slot>
+                        <a :href="item.url" class="article-link" target="_blank">
+                            {{item.title}}
+                        </a>
+                        <v-list-item-avatar class="mx-2" v-if="item.urlToImage">
+                            <v-img :src="item.urlToImage" class="article-img"></v-img>
+                        </v-list-item-avatar>
+                    </v-row>
+                    <v-row>
+                        <v-divider class="mt-2"></v-divider>
+                    </v-row>
+                </v-col>
+            </v-row>
+        </div>
+    </script>
+    <script>
+        var ArticleList = {
+            name: 'ArticleList',
+            props: ['articles'],
+            data: function () {
+                return {};
+            },
+            template: "#articleListTemplate"
+        };
+        new Vue({
+            el: "#app",
+            vuetify: new Vuetify(),
+            components: {'article-list': ArticleList},
+            mounted() {
+                this.getArticles();
+            },
+            computed: {
+                hasSaved() {
+                    return this.savedArticles.length > 0;
+                }
+            },
+            methods: {
+                getArticles() {
+                    axios.get('/articles/saved/').then((response) => {
+                        if (response.status === 200) {
+                            this.articles = response.data;
+                            console.log('Articles: ', this.articles);
+                        } else {
+                            console.error(response);
+                        }
+                    });
+                },
+                saveArticle(article) {
+                    console.log("Just saved to mongo :^): ", article.title);
+                    axios.post('/articles/saved/', article).then((response) => {
+                        if (response.status === 200) {
+                            console.log("Saved the link : ", response);
+                        } else {
+                            connsole.error(response);
+                        }
+                    });
+                }
+            },
+            data: {
+                articles: [],
+                savedArticles: []
+            }
+        });
+    </script>
+</html>

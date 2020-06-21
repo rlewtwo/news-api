@@ -1,0 +1,34 @@
+{
+  "name": "reginald-lewis",
+  "version": "1.0.0",
+  "description": "news api",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js",
+    "test": "nodemon main.js"
+  },
+  "keywords": [
+    "news"
+  ],
+  "author": "Reginald Lewis",
+  "license": "ISC",
+  "dependencies": {
+    "@mdi/font": "^5.3.45",
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongodb": "^3.5.6",
+    "newsapi": "^2.4.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rlewtwo/news-api.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rlewtwo/news-api/issues"
+  },
+  "homepage": "https://github.com/rlewtwo/news-api#readme"
+}
