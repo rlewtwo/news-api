@@ -15,9 +15,9 @@ Vue.js lets you extend HTML with HTML attributes called directives. Vue.js direc
 # What I did:
 I decided to create a MEVN stack (Vue.js + Node.js + Express + MongoDB) example with a CRUD Application. The back-end server uses Node.js + Express for REST APIs, front-end side is a Vue client with Vue Router and axios. The API allows you to save articles to MongoDB by clicking the earth icon (on the right of the articles). 
 
-# How to work
-Open a terminal and cd to the root project directory and run:
+# How to work news-api
+Got to the terminal (after cloning project) and cd to the root of news-api and run:
 
 npm start
-The main site page should then load at http://localhost:3000/
+you browser should then render at http://localhost:3000/
 
