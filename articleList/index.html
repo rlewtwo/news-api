@@ -74,11 +74,15 @@
                                 <v-card-text>
                                     <article-list :articles="savedArticles">
                                         <template slot="buttons" slot-scope="item">
+                                            <v-btn @click="deleteSavedArticle(item.article)"
+                                                   class="article-action-button" color="red" dark icon small>
+                                                <v-icon>mdi-delete</v-icon>
+                                            </v-btn>
                                         </template>
                                     </article-list>
                                 </v-card-text>
                             </v-card>
-                        </v-code>
+                        </v-col>
                     </v-row>
                 </v-container>
             </v-app>
@@ -127,7 +131,7 @@
             },
             methods: {
                 getArticles() {
-                    axios.get('/articles/saved/').then((response) => {
+                    axios.get('/articles/').then((response) => {
                         if (response.status === 200) {
                             this.articles = response.data;
                             console.log('Articles: ', this.articles);
@@ -137,7 +141,7 @@
                     });
                 },
                 saveArticle(article) {
-                    console.log("Just saved to mongo :^): ", article.title);
+                    console.log("Just saved to mongo: ", article.title);
                     axios.post('/articles/saved/', article).then((response) => {
                         if (response.status === 200) {
                             console.log("Saved the link : ", response);

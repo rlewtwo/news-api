@@ -32,7 +32,7 @@ app.get('/articles/saved', (req, res) => {
         if (e) {
             console.error(e);
         } else {
-            client.db('assignment').collection("savedArticles").find().toArray((e, r) => {
+            client.db('assignment').collection("BlavityArticles").find().toArray((e, r) => {
                 if (e) {
                     res.send(e.message);
                 } else {
@@ -47,7 +47,7 @@ app.post('/articles/saved', (req, res) => {
         if (e) {
             console.error(e);
         } else {
-            client.db('assignment').collection("savedArticles").insertOne(req.body, (e, r) => {
+            client.db('assignment').collection("Articles").insertOne(req.body, (e, r) => {
                 if (e) {
                     res.send(e.message);
                 } else {
