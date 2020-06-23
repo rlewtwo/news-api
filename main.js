@@ -8,9 +8,13 @@ const express = require('express');
 const port = 3000;
 const app = express();
 const mongo = require('mongodb');
-const client = mongo.MongoClient(process.env.MONGO_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
+const MongoClient = require('mongodb').MongoClient;
+const uri = "mongodb+srv://assignment:Bedrock12345@cluster0-uc8cu.mongodb.net/Articles?retryWrites=true&w=majority";
+const client = new MongoClient(uri, { useNewUrlParser: true });
+client.connect(err => {
+  const collection = client.db("assignment").collection("Articles");
+  // perform actions on the collection object
+  client.close();
 });
 app.use(express.static('articleList'));
 app.use(bodyParser.json());
@@ -32,7 +36,7 @@ app.get('/articles/saved', (req, res) => {
         if (e) {
             console.error(e);
         } else {
-            client.db('assignment').collection("BlavityArticles").find().toArray((e, r) => {
+            client.db('assignment').collection("Articles").find().toArray((e, r) => {
                 if (e) {
                     res.send(e.message);
                 } else {
