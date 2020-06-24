@@ -9,12 +9,9 @@ const port = 3000;
 const app = express();
 const mongo = require('mongodb');
 const MongoClient = require('mongodb').MongoClient;
-const uri = "mongodb+srv://assignment:Bedrock12345@cluster0-uc8cu.mongodb.net/Articles?retryWrites=true&w=majority";
-const client = new MongoClient(uri, { useNewUrlParser: true });
-client.connect(err => {
-  const collection = client.db("assignment").collection("Articles");
-  // perform actions on the collection object
-  client.close();
+const client = mongo.MongoClient(process.env.MONGO_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
 });
 app.use(express.static('articleList'));
 app.use(bodyParser.json());
@@ -61,5 +58,5 @@ app.post('/articles/saved', (req, res) => {
             });
         }
     });
-});
+
 app.listen(port, () => console.log(`Server is listening on port ${port}!`));
