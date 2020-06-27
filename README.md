@@ -18,6 +18,6 @@ I decided to create a MEVN stack (Vue.js + Node.js + Express + MongoDB) example 
 # How to work news-api
 Go to the terminal (after cloning project) and cd to the root of news-api and run:
 
-npm start
-the your browser should render at http://localhost:3000/
+[npm start]
+then, the browser should render at http://localhost:3000/
 
